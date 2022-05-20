@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import {BrowserRouter, Route, Switch} from "react-router-dom"
+import {Component} from "react"
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Admin from "./components/Admin"
+import ExistingUser from "./components/ExistingUser"
+import GuestUser from "./components/GuestUser"
+
+class App extends Component{
+  
+  state = {
+    username: "",
+  }
+
+  onChangeValue = value =>{
+    this.setState({username: value})
+  }
+
+  render(){
+    const {username} = this.state
+    return(
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/" >
+            <Admin onChangeValue = {this.onChangeValue}/>
+          </Route>
+          <Route exact path="/guestuser">
+            <GuestUser username={username} />
+          </Route>
+          <Route exact path="/existinguser">
+            <ExistingUser username={username} />
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    )
+  }
 }
 
 export default App;
